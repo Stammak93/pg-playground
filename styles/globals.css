@@ -1,0 +1,265 @@
+:root {
+  --colour-primary: #6f90f4;
+  --colour-secondary: white;
+  --colour-bg: #363636;
+}
+
+
+html,
+body {
+  padding: 0;
+  margin: 0;
+  height: 100vh;
+  background-color: var(--colour-secondary);
+  overflow: hidden;
+}
+
+#__next {
+  height: 100%;
+}
+
+.main-container {
+  height: 100%;
+  min-width: 49em;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.left-content {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 50%;
+}
+
+.right-content {
+  display: flex;
+  justify-content: flex-end;
+  height: 100%;
+  width: 40%;
+}
+
+/* Editor component */
+.query-input-container {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.editor-container {
+  border-right: 0.2em solid var(--colour-primary);
+  border-bottom: 0.2em solid var(--colour-primary);
+  width: 100%;
+  min-height: 40%;
+  height: 80%;
+}
+
+/* History Component */
+.query-history-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100%;
+  min-width: 24em;
+  width: 85%;
+  background-color: var(--colour-bg);
+  gap: 1em;
+  border-left: 0.2em solid var(--colour-primary);
+  overflow: auto;
+}
+
+.query-history__item {
+  display: flex;
+  flex-direction: row;
+  gap: 0.5em;
+  width: 90%;
+  background-color: var(--colour-bg);
+}
+
+.query-history__content {
+  width: 100%;
+  border: 0.1em solid var(--colour-primary);
+  border-radius: 0.15em;
+  background-color: var(--colour-bg);
+  color: var(--colour-secondary);
+  font-size: 1em;
+  font-family:Verdana, Geneva, Tahoma, sans-serif;
+}
+
+/* RerunButton component */
+.rerun-button {
+  height: 100%;
+  width: 5em;
+  min-width: 3em;
+  color: var(--colour-primary);
+  background-color: var(--colour-secondary);
+  border: 0.1em solid var(--colour-primary);
+  border-radius: 0.3em;
+}
+
+.rerun-button:hover {
+  color: var(--colour-secondary);
+  background-color: var(--colour-primary);
+  cursor: pointer;
+}
+
+
+/* Result Component */
+.query-result-container {
+  height: 40%;
+  display: block;
+  background-color: var(--colour-bg);
+  border-top: 0.2em solid var(--colour-primary);
+  border-right: 0.2em solid var(--colour-primary);
+  overflow: auto;
+  scrollbar-width: thin;
+  scrollbar-color: var(--colour-primary) var(--colour-bg);
+}
+
+.query-result-container table {
+  color: var(--colour-secondary);
+  min-width: 40%;
+  width: auto;
+  text-align: center;
+}
+
+.query-result-container th {
+  border-right: 0.15em solid var(--colour-primary);
+  border-top: 0.15em solid var(--colour-primary);
+  border-bottom: 0.15em solid var(--colour-primary);
+  border-radius: 0.2em;
+  height: 2em;
+}
+
+.query-result-container th:nth-child(1) {
+  border-left: 0.15em solid var(--colour-primary);
+}
+
+.query-result-container td {
+  border-bottom: 0.1em solid var(--colour-primary);
+  border-right: 0.1em solid var(--colour-primary);
+  border-radius: 0.2em;
+  height: 1.5em;
+}
+
+.query-result-container td:nth-child(1) {
+  border-left: 0.1em solid var(--colour-primary);
+}
+
+.query-result-container p {
+  color: var(--colour-secondary);
+  font-size: 1.1em;
+  margin-left: 1em;
+}
+
+/* Toolbar Component */
+.toolbar-container {
+  width: 100%;
+  height: 4em;
+  background-color: var(--colour-bg);
+  border-bottom: 0.1em solid var(--colour-secondary);
+  border-right: 0.2em solid var(--colour-primary);
+}
+
+.toolbar-container__button {
+  width: 9em;
+  height: 3.5em;
+  color: var(--colour-primary);
+  background-color: var(--colour-secondary);
+  border: 0.1em solid var(--colour-primary);
+  border-radius: 0.3em;
+  margin-left: 0.5em;
+  margin-top: 0.5em;
+}
+
+.toolbar-container__button:hover {
+  color: var(--colour-secondary);
+  background-color: var(--colour-primary);
+  cursor: pointer;
+}
+
+
+/* Code Mirror elements */
+.ͼb {
+  color: var(--colour-primary);
+}
+
+.ͼ1 .cm-tooltip.cm-tooltip-autocomplete > ul > li {
+  overflow-x: hidden; 
+  text-overflow: ellipsis; 
+  cursor: pointer; 
+  padding: 1px 3px; 
+  line-height: 1.2;
+}
+
+.ͼ1 .cm-tooltip.cm-tooltip-autocomplete > ul {
+  font-family: Verdana, Geneva, Tahoma, sans-serif; 
+  white-space: nowrap; 
+  overflow: hidden auto; 
+  max-width: 700px; 
+  max-width: min(700px, 95vw); 
+  min-width: 250px; 
+  max-height: 10em; 
+  list-style: none; 
+  margin: 0; 
+  padding: 0;
+  scrollbar-width: thin;
+  scrollbar-color: var(--colour-bg) transparent;
+}
+
+.ͼ2 .cm-tooltip-autocomplete ul li[aria-selected] {
+  background-color: var(--colour-primary);
+  color: black;
+}
+
+.ͼ3 .cm-tooltip-autocomplete ul li[aria-selected] {
+  background-color: var(--colour-primary);
+  color: black;
+}
+
+.ͼ1 .cm-cursor, .ͼ1 .cm-dropCursor {
+  position: absolute; 
+  border-left: 1.2px solid var(--colour-primary);
+  margin-left: -0.6px; 
+  pointer-events: none;
+}
+
+.cm-content {
+  color: var(--colour-secondary);
+  font-family:Verdana, Geneva, Tahoma, sans-serif;
+  font-size: 1.1em;
+}
+
+.cm-editor {
+  color: black;
+  background-color: var(--colour-bg);
+}
+
+.cm-line,
+.cm-activeLine {
+  background-color: var(--colour-bg) !important;
+}
+
+.cm-gutters,
+.cm-gutterElement {
+  background-color: var(--colour-bg) !important;
+  color: var(--colour-primary) !important;
+  border-left: var(--colour-bg) !important;
+  font-size: 1.03em;
+  font-family:Verdana, Geneva, Tahoma, sans-serif;
+}
+
+.ͼ4 .cm-line ::selection {
+  background-color: #ffffff55 !important;
+}
+
+.ͼ4 .cm-line::selection {
+  background-color: #ffffff55 !important;
+}
+
+.cm-scroller {
+  scrollbar-width: thin;
+  scrollbar-color: var(--colour-primary) var(--colour-bg);
+  max-height: 100%;
+}
