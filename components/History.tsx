@@ -5,7 +5,7 @@ import { sql, PostgreSQL } from "@codemirror/lang-sql";
 
 interface HistoryProps {
     queryHistory: string[] | [];
-    setQueryResult: Dispatch<SetStateAction<any[]>>;
+    setQueryResult: Dispatch<SetStateAction<unknown[]>>;
 };
 
 

@@ -9,7 +9,7 @@ import { sql, PostgreSQL } from "@codemirror/lang-sql";
 interface EditorProps {
     setQueryHistory: Dispatch<SetStateAction<string[] | []>>;
     queryHistory: string[] | [];
-    setQueryResult: Dispatch<SetStateAction<any[] | []>>;
+    setQueryResult: Dispatch<SetStateAction<unknown[]| []>>;
 };
 
 // This component will display a toolbar with a button to execute queries

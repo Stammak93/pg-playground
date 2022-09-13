@@ -23,7 +23,7 @@ body {
 
 .main-container {
   height: 100%;
-  min-width: 49em;
+  min-width: 50em;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -33,6 +33,7 @@ body {
   display: flex;
   flex-direction: column;
   height: 100%;
+  min-height: 27.5em;
   width: 50%;
 }
 
@@ -51,7 +52,7 @@ body {
   background-color: var(--colour-bg);
   border-bottom: 0.1em solid var(--colour-secondary);
   border-right: 0.2em solid var(--colour-primary);
-  box-shadow: 0.1em 0em 0em 0.2em var(--colour-shadow), 0.15em 0.2em 0.1em 0.1em var(--colour-shadow);
+  box-shadow: 0.15em 0.1em 0em 0.1em var(--colour-shadow);
 }
 
 .toolbar-container__button {
@@ -59,16 +60,18 @@ body {
   height: 3.5em;
   color: var(--colour-primary);
   background-color: var(--colour-secondary);
-  border: 0.1em solid var(--colour-primary);
-  border-radius: 0.3em;
+  border: 0.2em solid var(--colour-primary);
+  border-radius: 0.4em;
   margin-left: 0.5em;
   margin-top: 0.5em;
+  box-shadow: 0.1em 0.2em 0em 0.1em var(--colour-shadow);
 }
 
 .toolbar-container__button:hover {
   color: var(--colour-secondary);
   background-color: var(--colour-primary);
   cursor: pointer;
+  transform: scale(1.02);
 }
 
 
@@ -85,7 +88,7 @@ body {
   width: 100%;
   min-height: 40%;
   height: 70%;
-  box-shadow: 0.16em 0.2em 0em 0.1em var(--colour-shadow), -0.15em 0.2em 0em 0.1em var(--colour-shadow);
+  box-shadow: 0.16em 0.2em 0em 0.1em var(--colour-shadow),-0.15em 0.2em 0em 0.1em var(--colour-shadow);
 }
 
 /* History Component */
@@ -95,9 +98,9 @@ body {
   align-items: center;
   height: 100%;
   min-width: 24em;
-  width: 80%;
+  width: 75%;
   background-color: var(--colour-bg);
-  gap: 1em;
+  gap: 1.2em;
   border-left: 0.2em solid var(--colour-primary);
   overflow: auto;
   scrollbar-color: var(--colour-primary) var(--colour-bg);
@@ -114,9 +117,12 @@ body {
 
 .query-history__content {
   align-self: center;
-  width: 85%;
-  border: 0.1em solid var(--colour-primary);
-  border-radius: 0.15em;
+  width: 75%;
+  border-top: 0.1em solid var(--colour-primary);
+  border-bottom: 0.3em solid var(--colour-primary);
+  border-left: 0.1em solid var(--colour-primary);
+  border-right: 0.4em solid var(--colour-primary);
+  border-radius: 0em 0.35em 0.15em 0.25em;
   background-color: var(--colour-bg);
   color: var(--colour-secondary);
   font-size: 0.9em;
@@ -135,8 +141,9 @@ body {
   min-width: 3em;
   color: var(--colour-primary);
   background-color: var(--colour-secondary);
-  border: 0.1em solid var(--colour-primary);
-  border-radius: 0.3em;
+  border: 0.2em solid var(--colour-primary);
+  border-radius: 0.2em 0.5em 0.2em 0.5em;
+  box-shadow: -0.2em 0.1em 0em 0.1em var(--colour-shadow);
 }
 
 .rerun-button:hover {
@@ -149,7 +156,8 @@ body {
 /* Result Component */
 .query-result-container {
   height: 40%;
-  display: block;
+  width: 100%;
+  display: flex;
   background-color: var(--colour-bg);
   border-top: 0.2em solid var(--colour-primary);
   border-right: 0.2em solid var(--colour-primary);
@@ -168,10 +176,13 @@ body {
 
 .query-result-container th {
   border-right: 0.15em solid var(--colour-primary);
-  border-top: 0.15em solid var(--colour-primary);
-  border-bottom: 0.15em solid var(--colour-primary);
+  border-bottom: 0.4em solid var(--colour-primary);
   border-radius: 0.2em;
   height: 2em;
+}
+
+.query-result-container th:last-child {
+  border-right: 0.15em solid var(--colour-primary);
 }
 
 .query-result-container th:nth-child(1) {
@@ -252,7 +263,6 @@ body {
 .cm-content {
   color: var(--colour-secondary);
   font-family:Verdana, Geneva, Tahoma, sans-serif;
-  font-size: 1.1em;
 }
 
 .cm-editor {
@@ -286,4 +296,8 @@ body {
   scrollbar-width: thin;
   scrollbar-color: var(--colour-primary) var(--colour-bg);
   max-height: 100%;
+}
+
+.ͼ1.cm-editor.cm-focused {
+  outline: none;
 }

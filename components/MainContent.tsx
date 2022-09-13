@@ -7,7 +7,7 @@ import History from "./History";
 const MainContent = () => {
 
     const [queryHistory, setQueryHistory] = useState<string[] | []>([]);
-    const [queryResult, setQueryResult] = useState<any[] | []>([]);
+    const [queryResult, setQueryResult] = useState<unknown[]| []>([]);
 
 
     return (

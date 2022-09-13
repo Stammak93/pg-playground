@@ -1,5 +1,5 @@
 type QueryResult = {
-    queryResult: any[] | [];
+    queryResult: unknown[] | [];
 };
 
 
@@ -7,25 +7,29 @@ const Result = ({ queryResult }: QueryResult) => {
 
 
     const renderQueryTableHeaders = () => {
-        const renderedHeaders = Object.keys(queryResult[0]).map((item,index) => {
 
-            return (
-                <th key={index}>{item}</th>
-            );
-        });
+        if(Array.isArray(queryResult)) {
+            
+            const renderedHeaders = Object.keys(queryResult[0]).map((item,index) => {
 
-        return renderedHeaders;
+                return (
+                    <th key={index}>{item}</th>
+                );
+            });
+                
+            return renderedHeaders
+        }
     }
 
     const renderQueryTableContent = queryResult.map((item,index) => {
 
-        let values = Object.values(item).map((value: any,index) => {
+        let values = Object.values(item!).map((value: any,index) => {
 
             return (
                 <td key={index}>{value}</td>
             );
         });
-
+            
         return (
             <tr key={index}>
                 {values}

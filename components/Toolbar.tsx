@@ -6,7 +6,7 @@ interface ToolbarProps {
     setQueryHistory: Dispatch<SetStateAction<string[] | []>>;
     queryHistory: string[] | [];
     query: string;
-    setQueryResult: Dispatch<SetStateAction<any[]>>;
+    setQueryResult: Dispatch<SetStateAction<unknown[]>>;
 };
 
 
@@ -43,7 +43,7 @@ const Toolbar = ({ query, setQueryHistory, queryHistory, setQueryResult }: Toolb
             setQueryResult(queryDeets);
         
         } else {
-            let data = await response.json();
+            let data: string[] = await response.json();
             setQueryResult(data);
         }
     };

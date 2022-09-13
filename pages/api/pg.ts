@@ -14,14 +14,14 @@ export default async function handler(
 
     res.status(200).json({ metadata });
   
-  } catch (err: any) {
+  } catch (err: unknown) {
 
       let data = "";
-
-      if(err.original) {
-        data = `Error: ${err.original.message}`;
+      if(err instanceof Error) {
+        data = err.message;
+      
       } else {
-          throw new Error("No property 'original' on Error object");
+          throw new Error("No property 'message' on Error object");
       }
 
       return res.status(400).json([data]);
