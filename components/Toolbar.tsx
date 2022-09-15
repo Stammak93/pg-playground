@@ -18,7 +18,7 @@ const Toolbar = ({ query, setQueryHistory, queryHistory, setQueryResult }: Toolb
 
         metadata.forEach(item => {
             if(item.rows.length === 0) {
-                returnValue.push("Query was succesful")
+                returnValue.push("Query was successful")
             } else {
                 returnValue.push(item);
             }
@@ -46,9 +46,12 @@ const Toolbar = ({ query, setQueryHistory, queryHistory, setQueryResult }: Toolb
             if(typeof metadata === "number") {
                 queryDeets.push(`Rows affected: ${metadata}`)
             
+            } else if(Array.isArray(metadata)){
+                queryDeets = processMetadata(metadata);
+            
             } else {
-                if(Array.isArray(metadata)) {
-                    queryDeets = processMetadata(metadata);
+                if(metadata.rows.length === 0) {
+                    queryDeets.push("Query was successful")
                 } else {
                     queryDeets.push(metadata);
                 }

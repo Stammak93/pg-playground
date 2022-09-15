@@ -70,7 +70,7 @@ const Result = ({ queryResult }: QueryResult) => {
             if(typeof content === "string") {
 
                 return (
-                    <p key={index}>{content}</p>
+                    <p key={`${index}_${content}`}>{content}</p>
                 );
             }
         }
