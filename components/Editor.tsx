@@ -4,12 +4,13 @@ import Toolbar from "./Toolbar";
 import { ViewUpdate } from "@codemirror/view";
 import CodeMirror from "@uiw/react-codemirror";
 import { sql, PostgreSQL } from "@codemirror/lang-sql";
+import type { MetaData } from "../variousTypes";
 
 
 interface EditorProps {
-    setQueryHistory: Dispatch<SetStateAction<string[] | []>>;
-    queryHistory: string[] | [];
-    setQueryResult: Dispatch<SetStateAction<unknown[]| []>>;
+    setQueryHistory: Dispatch<SetStateAction<string[]>>;
+    queryHistory: string[];
+    setQueryResult: Dispatch<SetStateAction<(MetaData | string)[]>>;
 };
 
 // This component will display a toolbar with a button to execute queries

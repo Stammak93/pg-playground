@@ -2,10 +2,11 @@ import type { Dispatch, SetStateAction } from "react";
 import CodeMirror from "@uiw/react-codemirror";
 import RerunButton from "./RerunButton";
 import { sql, PostgreSQL } from "@codemirror/lang-sql";
+import type { MetaData } from "../variousTypes";
 
 interface HistoryProps {
-    queryHistory: string[] | [];
-    setQueryResult: Dispatch<SetStateAction<unknown[]>>;
+    queryHistory: string[];
+    setQueryResult: Dispatch<SetStateAction<(MetaData | string)[]>>;
 };
 
 

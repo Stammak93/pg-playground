@@ -1,39 +1,56 @@
 import type { Dispatch, SetStateAction } from "react";
-import type { ResponseData } from "../variousTypes";
+import type { ResponseData, MetaData } from "../variousTypes";
 
 interface RerunButtonProps {
-    entry: string;
-    setQueryResult: Dispatch<SetStateAction<any[]>>;
+    historyTextValue: string;
+    setQueryResult: Dispatch<SetStateAction<(MetaData | string)[]>>;
 }
 
 
-const RerunButton = ({ entry, setQueryResult }: RerunButtonProps) => {
+const RerunButton = ({ historyTextValue, setQueryResult }: RerunButtonProps) => {
+
+
+    const processMetadata = (metadata: MetaData[]) => {
+        let returnValue: (MetaData | string)[] = [];
+
+        metadata.forEach(item => {
+            if(item.rows.length === 0) {
+                returnValue.push("Query was succesful")
+            } else {
+                returnValue.push(item);
+            }
+        })
+        
+        return returnValue
+    };
+
 
     const sendQuery = async (): Promise<void> => {
         
         const response = await fetch("/api/pg", {
             method: "POST",
-            body: entry
+            body: historyTextValue
         });
     
         if(response.status === 200 || response.status === 201) {
             let { metadata }: ResponseData = await response.json();
-            let queryDeets = [];
+            let queryDeets: (MetaData | string)[] = [];
 
             if(typeof metadata === "number") {
-                queryDeets = [`Rows affected: ${metadata}`]
-            
-            } else if (metadata.rows.length === 0) {
-                queryDeets = ["Query was succesful"]
+                queryDeets.push(`Rows affected: ${metadata}`)
             
             } else {
-                queryDeets = metadata.rows;
+                if(Array.isArray(metadata)) {
+                    queryDeets = processMetadata(metadata);
+                } else {
+                    queryDeets.push(metadata);
+                }
             }
 
             setQueryResult(queryDeets);
         
         } else {
-            let data = await response.json();
+            let data: string[] = await response.json();
             setQueryResult(data);
         }
     };

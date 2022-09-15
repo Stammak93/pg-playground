@@ -1,3 +1,4 @@
+// not needed but it's there
 type Field = {
     name: string,
     tableID: number,
@@ -8,14 +9,14 @@ type Field = {
     format: string
 };
 
-type MetaData = {
+export type MetaData = {
     command: string,
     rowCount: number,
     oid: null,
     rows: unknown[],
     fields: Field[] | []
-}
+};
 
 export type ResponseData = {
-    metadata: MetaData | number;
+    metadata: MetaData[] | MetaData | number;
 };

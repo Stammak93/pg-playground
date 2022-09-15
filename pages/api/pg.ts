@@ -12,6 +12,8 @@ export default async function handler(
     
     const [result,metadata] = await sequelize.query(userQuery);
 
+    console.log(metadata);
+
     res.status(200).json({ metadata });
   
   } catch (err: unknown) {

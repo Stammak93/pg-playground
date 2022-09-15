@@ -2,12 +2,13 @@ import { useState } from "react";
 import Editor from "./Editor";
 import Result from "./Result";
 import History from "./History";
+import type { MetaData } from "../variousTypes";
 
 
 const MainContent = () => {
 
-    const [queryHistory, setQueryHistory] = useState<string[] | []>([]);
-    const [queryResult, setQueryResult] = useState<unknown[]| []>([]);
+    const [queryHistory, setQueryHistory] = useState<string[]>([]);
+    const [queryResult, setQueryResult] = useState<(MetaData | string)[]>([]);
 
 
     return (
