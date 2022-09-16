@@ -30,10 +30,10 @@ const Result = ({ queryResult }: QueryResult) => {
         if(typeof content !== "string" && content.rows.length > 0) {
 
             const renderContent = content.rows.map((item,index) => {
-                let values = Object.values(item!).map((value, index) => {
+                let values = Object.values(item!).map((value: string | number | null, index) => {
         
                     return (
-                        <td key={`${index}${value}`}>{value}</td>
+                        <td key={`${index}${value}`}>{value === null ? "NULL" : value}</td>
                     );
                 });
                     
@@ -54,11 +54,11 @@ const Result = ({ queryResult }: QueryResult) => {
         if(typeof content !== "string") {
 
             return (
-                <table className="content-table">
-                    <thead>
-                        <tr>{renderTableHeaders(content)}</tr>
+                <table key={`${index}_table`} className="content-table">
+                    <thead key={`${index}_h`}>
+                        <tr key={`${index}_tr`}>{renderTableHeaders(content)}</tr>
                     </thead>
-                    <tbody>
+                    <tbody key={`${index}_b`}>
                         {renderTableContent(content)}
                     </tbody>
                 </table>

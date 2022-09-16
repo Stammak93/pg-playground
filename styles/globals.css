@@ -181,7 +181,7 @@ body {
 }
 
 .content-table th {
-  border-top:  0.15em solid var(--colour-primary);
+  border-top:  0.4em solid var(--colour-primary);
   border-right: 0.15em solid var(--colour-primary);
   border-bottom: 0.4em solid var(--colour-primary);
   border-radius: 0.2em;
