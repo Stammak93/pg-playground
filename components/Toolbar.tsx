@@ -7,18 +7,23 @@ interface ToolbarProps {
     queryHistory: string[];
     query: string;
     setQueryResult: Dispatch<SetStateAction<(MetaData | string)[]>>;
+    setQuery: Dispatch<SetStateAction<string>>;
 };
 
 // this component will execute queris and set state based on server response
-const Toolbar = ({ query, setQueryHistory, queryHistory, setQueryResult }: ToolbarProps) => {
+const Toolbar = ({ query, setQueryHistory, queryHistory, setQueryResult, setQuery }: ToolbarProps) => {
 
 
     const processMetadata = (metadata: MetaData[]) => {
         let returnValue: (MetaData | string)[] = [];
+        let pushOnlyOneMsg = false;
 
         metadata.forEach(item => {
             if(item.rows.length === 0) {
-                returnValue.push("Query was successful")
+                if(pushOnlyOneMsg === false) {
+                    returnValue.push("Query was successful")
+                    pushOnlyOneMsg = true;
+                }
             } else {
                 returnValue.push(item);
             }
@@ -70,10 +75,13 @@ const Toolbar = ({ query, setQueryHistory, queryHistory, setQueryResult }: Toolb
     return (
         <div className="toolbar-container">
             <button
-                className="toolbar-container__button"
+                className="toolbar-container__button-query"
                 onClick={() => sendQuery()}>
                     Execute Query
             </button>
+            <button 
+                className="toolbar-container__button-clear"
+                onClick={() => setQuery("") }>Clear Console</button>
         </div>
     );
 };

@@ -20,7 +20,7 @@ const History = ({ queryHistory, setQueryResult }: HistoryProps) => {
 
         return (
             <div key={index} className="query-history__item">
-                <RerunButton entry={entry} setQueryResult={setQueryResult}/>
+                <RerunButton historyTextValue={entry} setQueryResult={setQueryResult}/>
                 <CodeMirror
                     className="query-history__content"
                     value={entry}
@@ -39,7 +39,10 @@ const History = ({ queryHistory, setQueryResult }: HistoryProps) => {
 
 
     return (
-        <div className="query-history-container">{renderQueryHistory}</div>
+        <div className="query-history-container">
+            <h3 style={{ color: "white", height: "0.5em"}}>Query History</h3>
+            {renderQueryHistory}
+        </div>
     )
 };
 

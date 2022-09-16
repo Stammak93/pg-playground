@@ -6,7 +6,6 @@ interface QueryResult {
 
 const Result = ({ queryResult }: QueryResult) => {
 
-    
     // maps keys of rows 
     const renderTableHeaders = (content: MetaData) => {
         
@@ -15,7 +14,7 @@ const Result = ({ queryResult }: QueryResult) => {
             const renderHeaders = Object.keys(content.rows[0]!).map((item,index) => {
         
                 return (
-                    <th key={index}>{item}</th>
+                    <th key={`${index}${item}`}>{item}</th>
                 );
             });
                     
@@ -34,7 +33,7 @@ const Result = ({ queryResult }: QueryResult) => {
                 let values = Object.values(item!).map((value, index) => {
         
                     return (
-                        <td key={index}>{value}</td>
+                        <td key={`${index}${value}`}>{value}</td>
                     );
                 });
                     
@@ -66,11 +65,11 @@ const Result = ({ queryResult }: QueryResult) => {
             );
         
         } else {
-            
+
             if(typeof content === "string") {
 
                 return (
-                    <p key={`${index}_${content}`}>{content}</p>
+                    <p className="query-info" key={`${index}_${content}`}>{content}</p>
                 );
             }
         }
@@ -80,6 +79,8 @@ const Result = ({ queryResult }: QueryResult) => {
 
     
     const renderedContent = queryResult.map((content,index) => {
+        
+
         return (
             renderResultContent(content,index)
         )
@@ -88,10 +89,11 @@ const Result = ({ queryResult }: QueryResult) => {
 
     return (
         <div className="query-result-container">
+            <h3 style={{ color: "white", height: "0.1em", margin: "0.4em", textAlign: "center"}}>Query Result</h3>
             { queryResult.length > 0 ?
                 renderedContent
                 : 
-                <p>Query information will be displayed here</p>
+                null
             }
         </div>
     );

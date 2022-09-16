@@ -12,10 +12,13 @@ const RerunButton = ({ historyTextValue, setQueryResult }: RerunButtonProps) => 
 
     const processMetadata = (metadata: MetaData[]) => {
         let returnValue: (MetaData | string)[] = [];
-
+        let pushOnlyOneMsg = false;
         metadata.forEach(item => {
             if(item.rows.length === 0) {
-                returnValue.push("Query was succesful")
+                if(pushOnlyOneMsg === false) {
+                    returnValue.push("Query was successful")
+                    pushOnlyOneMsg = true;
+                }
             } else {
                 returnValue.push(item);
             }

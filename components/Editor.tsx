@@ -27,7 +27,12 @@ const Editor = ({ setQueryHistory, queryHistory, setQueryResult }: EditorProps) 
 
     return (
         <div id="pg-queries" className="query-input-container">
-            <Toolbar query={query} setQueryHistory={setQueryHistory} queryHistory={queryHistory} setQueryResult={setQueryResult} />
+            <Toolbar query={query} 
+                setQueryHistory={setQueryHistory} 
+                queryHistory={queryHistory} 
+                setQueryResult={setQueryResult} 
+                setQuery={setQuery}
+            />
             <CodeMirror
                 className="editor-container"
                 value={query}
