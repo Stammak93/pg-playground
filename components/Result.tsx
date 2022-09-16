@@ -72,6 +72,12 @@ const Result = ({ queryResult }: QueryResult) => {
                     <p className="query-info" key={`${index}_${content}`}>{content}</p>
                 );
             }
+
+            if(typeof content === "number") {
+                return (
+                    <p className="query-info" key={`${index}_${content}`}>Rows affected: {content}</p>
+                )
+            }
         }
 
         return null;

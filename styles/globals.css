@@ -169,7 +169,7 @@ body {
   overflow: auto;
   scrollbar-width: thin;
   scrollbar-color: var(--colour-primary) var(--colour-bg);
-  box-shadow: 0.12em -0.2em 0em 0.1em var(--colour-shadow), 0.15em 0em 0em 0.1em var(--colour-shadow);
+  box-shadow: 0.1em -0.2em 0em 0.1em var(--colour-shadow), 0.1em -0.1em 0em 0.1em var(--colour-shadow);
 }
 
 .content-table {
