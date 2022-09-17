@@ -17,6 +17,11 @@ export type MetaData = {
     fields: Field[] | []
 };
 
+export type QueryObject = {
+    query: string;
+    queryDeets: (string | MetaData)[];
+};
+
 export type ResponseData = {
     metadata: MetaData[] | MetaData | number;
 };

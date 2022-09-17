@@ -1,5 +1,6 @@
 import type { Dispatch, SetStateAction } from "react";
-import type { ResponseData, MetaData } from "../variousTypes";
+import { sendQuery } from "../utility/querying";
+import type { QueryObject, MetaData } from "../variousTypes";
 
 interface RerunButtonProps {
     historyTextValue: string;
@@ -10,60 +11,20 @@ interface RerunButtonProps {
 const RerunButton = ({ historyTextValue, setQueryResult }: RerunButtonProps) => {
 
 
-    const processMetadata = (metadata: MetaData[]) => {
-        let returnValue: (MetaData | string)[] = [];
-        let pushOnlyOneMsg = false;
-        metadata.forEach(item => {
-            if(item.rows.length === 0) {
-                if(pushOnlyOneMsg === false) {
-                    returnValue.push("Query was successful")
-                    pushOnlyOneMsg = true;
-                }
-            } else {
-                returnValue.push(item);
-            }
-        })
-        
-        return returnValue
-    };
+    const handleQueryBtnClick = async (): Promise<void> => {
 
+        const result: string[] | QueryObject = await sendQuery(historyTextValue);
 
-    const sendQuery = async (): Promise<void> => {
-        
-        const response = await fetch("/api/pg", {
-            method: "POST",
-            body: historyTextValue
-        });
-    
-        if(response.status === 200 || response.status === 201) {
-            let { metadata }: ResponseData = await response.json();
-            let queryDeets: (MetaData | string)[] = [];
-
-            if(typeof metadata === "number") {
-                queryDeets.push(`Rows affected: ${metadata}`)
-            
-            } else if(Array.isArray(metadata)){
-                queryDeets = processMetadata(metadata);
-            
-            } else {
-                if(metadata.rows.length === 0) {
-                    queryDeets.push("Query was successful")
-                } else {
-                    queryDeets.push(metadata);
-                }
-            }
-
-            setQueryResult(queryDeets);
-        
+        if(Array.isArray(result)) {
+            setQueryResult(result);
         } else {
-            let data: string[] = await response.json();
-            setQueryResult(data);
+            setQueryResult(result.queryDeets);
         }
     };
 
     return (
         <div className="rerun-button-container">
-            <button onClick={() => sendQuery()} className="rerun-button">Rerun</button>
+            <button onClick={() => handleQueryBtnClick()} className="rerun-button">Rerun</button>
         </div>
     );
 };

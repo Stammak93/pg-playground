@@ -5,6 +5,7 @@
   --colour-str: #87ffff;
   --colour-int: #ff9dff;
   --colour-shadow: #6f6fd3;
+  --colour-bool: #fffc64;
 }
 
 
@@ -55,8 +56,7 @@ body {
   box-shadow: 0.15em 0.1em 0em 0.1em var(--colour-shadow);
 }
 
-.toolbar-container__button-query,
-.toolbar-container__button-clear {
+.tl-btn {
   width: 9em;
   height: 3.5em;
   color: var(--colour-primary);
@@ -68,8 +68,7 @@ body {
   box-shadow: 0.1em 0.2em 0em 0.1em var(--colour-shadow);
 }
 
-.toolbar-container__button-query:hover,
-.toolbar-container__button-clear:hover {
+.tl-btn:hover {
   color: var(--colour-secondary);
   background-color: var(--colour-primary);
   cursor: pointer;
@@ -211,9 +210,10 @@ body {
 .query-result-container p {
   color: var(--colour-secondary);
   font-size: 1.1em;
+  margin-top: 0.2em;
   margin-left: 1em;
   order: 0;
-  line-height: 0;
+  line-height: 1em;
 }
 
 
@@ -228,6 +228,10 @@ body {
 
 .ͼd {
   color: var(--colour-int);
+}
+
+.ͼc {
+  color: var(--colour-bool);
 }
 
 .ͼ1 .cm-tooltip.cm-tooltip-autocomplete > ul > li {

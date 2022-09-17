@@ -1,5 +1,7 @@
 import type { Dispatch, SetStateAction } from "react";
-import type { ResponseData, MetaData } from "../variousTypes";
+import { sendQuery } from "../utility/querying";
+import type { QueryObject, MetaData } from "../variousTypes";
+import { LIST_TABLES_QUERY_FULL } from "../utility/list-tables-query";
 
 
 interface ToolbarProps {
@@ -14,74 +16,52 @@ interface ToolbarProps {
 const Toolbar = ({ query, setQueryHistory, queryHistory, setQueryResult, setQuery }: ToolbarProps) => {
 
 
-    const processMetadata = (metadata: MetaData[]) => {
-        let returnValue: (MetaData | string)[] = [];
-        let pushOnlyOneMsg = false;
+    const handleListTablesBtnClick = async (): Promise<void> => {
 
-        metadata.forEach(item => {
-            if(item.rows.length === 0) {
-                if(pushOnlyOneMsg === false) {
-                    returnValue.push("Query was successful")
-                    pushOnlyOneMsg = true;
-                }
-            } else {
-                returnValue.push(item);
-            }
-        })
-        
-        return returnValue
+        const result: string[] | QueryObject = await sendQuery(LIST_TABLES_QUERY_FULL);
+
+        if(Array.isArray(result)) {
+            setQueryResult(result);
+        } else {
+            setQueryResult(result.queryDeets);
+        }
     };
 
 
-    const sendQuery = async (): Promise<void> => {
+    const handleQueryBtnClick = async (): Promise<void> => {
         
         if(query === "") {
             return;
         }
         
-        const response = await fetch("/api/pg", {
-            method: "POST",
-            body: query
-        });
-    
-        if(response.status === 200 || response.status === 201) {
-            let { metadata }: ResponseData = await response.json();
-            let queryDeets: (MetaData | string)[] = [];
+        const result: string[] | QueryObject  = await sendQuery(query);
 
-            if(typeof metadata === "number") {
-                queryDeets.push(`Rows affected: ${metadata}`)
-            
-            } else if(Array.isArray(metadata)){
-                queryDeets = processMetadata(metadata);
-            
-            } else {
-                if(metadata.rows.length === 0) {
-                    queryDeets.push("Query was successful")
-                } else {
-                    queryDeets.push(metadata);
-                }
-            }
-
-            setQueryHistory(queryHistory => [...queryHistory, query]);
-            setQueryResult(queryDeets);
-        
+        if(Array.isArray(result)) {
+            setQueryResult(result)
         } else {
-            let data: string[] = await response.json();
-            setQueryResult(data);
+            setQueryHistory(queryHistory => [...queryHistory, query]);
+            setQueryResult(result.queryDeets);
         }
+        
     };
 
 
     return (
         <div className="toolbar-container">
             <button
-                className="toolbar-container__button-query"
-                onClick={() => sendQuery()}>
+                className="toolbar-container__button-query tl-btn"
+                onClick={() => handleQueryBtnClick()}>
                     Execute Query
             </button>
             <button 
-                className="toolbar-container__button-clear"
-                onClick={() => setQuery("") }>Clear Console</button>
+                className="toolbar-container__button-clear tl-btn"
+                onClick={() => setQuery("") }>Clear Console
+            </button>
+            <button 
+                className="toolbar-container__button-tables tl-btn" 
+                onClick={() => handleListTablesBtnClick()}>
+                    List Tables
+            </button>
         </div>
     );
 };
