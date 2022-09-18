@@ -1,4 +1,5 @@
 import type { MetaData } from "../variousTypes";
+import { processValue } from "../utility/querying";
 
 interface QueryResult {
     queryResult: (MetaData | string)[];
@@ -22,18 +23,20 @@ const Result = ({ queryResult }: QueryResult) => {
         }
 
         return null
-    }
+    };
 
     // maps values of rows
     const renderTableContent = (content: MetaData) => {
         
         if(typeof content !== "string" && content.rows.length > 0) {
-
+            // content.rows are objects with key/value pairs
+            // I need to map twice to unwrap the values and then map
+            // the result to a <tr> element
             const renderContent = content.rows.map((item,index) => {
-                let values = Object.values(item!).map((value: string | number | null, index) => {
-        
+                let values = Object.values(item!).map((value: unknown, index) => {
+
                     return (
-                        <td key={`${index}${value}`}>{value === null ? "NULL" : value}</td>
+                        <td key={`${index}${value}`}>{processValue(value)}</td>
                     );
                 });
                     
@@ -42,11 +45,12 @@ const Result = ({ queryResult }: QueryResult) => {
                         {values}
                     </tr>
                 )
-            })
+            });
+
             return renderContent;
         }
         return null;
-    }
+    };
 
     // decides whether to render a table or a p tag message based on queryResult content
     const renderResultContent = (content: MetaData | string, index: number) => {
@@ -76,7 +80,7 @@ const Result = ({ queryResult }: QueryResult) => {
             if(typeof content === "number") {
                 return (
                     <p className="query-info" key={`${index}_${content}`}>Rows affected: {content}</p>
-                )
+                );
             }
         }
 
@@ -95,7 +99,9 @@ const Result = ({ queryResult }: QueryResult) => {
 
     return (
         <div className="query-result-container">
-            <h3 style={{ color: "white", height: "0.1em", margin: "0.4em", textAlign: "center"}}>Query Result</h3>
+            <div className="query-result-title">
+                <h3>Query Result</h3>
+            </div>
             { queryResult.length > 0 ?
                 renderedContent
                 : 

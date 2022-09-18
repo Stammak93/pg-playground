@@ -99,7 +99,7 @@ body {
   align-items: center;
   height: 100%;
   min-width: 24em;
-  width: 75%;
+  width: 80%;
   background-color: var(--colour-bg);
   gap: 1.2em;
   border-left: 0.2em solid var(--colour-primary);
@@ -156,7 +156,6 @@ body {
 
 /* Result Component */
 .query-result-container {
-  position: relative;
   height: 40%;
   width: 100%;
   display: flex;
@@ -169,6 +168,23 @@ body {
   scrollbar-width: thin;
   scrollbar-color: var(--colour-primary) var(--colour-bg);
   box-shadow: 0.1em -0.2em 0em 0.1em var(--colour-shadow), 0.1em -0.1em 0em 0.1em var(--colour-shadow);
+}
+
+.query-result-title {
+  min-height: 1.2em;
+  width: 100%;
+}
+
+.query-result-title h3 {
+  color: white;
+  height: 1.5em;
+  width: 50%;
+  min-width: 21.4em;
+  background-color: var(--colour-primary);
+  text-align: center;
+  line-height: 1.2em;
+  margin-top: 0em;
+  position: fixed;
 }
 
 .content-table {

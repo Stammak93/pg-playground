@@ -51,3 +51,25 @@ export const sendQuery = async (query: string): Promise<string[] | QueryObject> 
         return data;
     }
 };
+
+// some values don't show because they are not in a valid
+// format such as null and boolean therefore, I need to do change 
+// them to strings
+export const processValue = (value: unknown): string | number => {
+
+    let processedValue: string | number = "";
+
+    if(typeof value === "number" || typeof value === "string") {
+        processedValue = value
+    }
+
+    if(value === null) {
+        processedValue = "null"
+    }
+
+    if(typeof value === "boolean") {
+        value === true ? processedValue = "true" : processedValue = "false";
+    }
+
+    return processedValue;
+};
