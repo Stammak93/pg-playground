@@ -154,6 +154,7 @@ body {
 }
 
 
+
 /* Result Component */
 .query-result-container {
   height: 40%;
@@ -162,12 +163,27 @@ body {
   gap: 1.5em;
   flex-direction: column;
   background-color: var(--colour-bg);
-  border-top: 0.2em solid var(--colour-primary);
-  border-right: 0.2em solid var(--colour-primary);
+  border-top: 2px solid var(--colour-primary);
+  border-right: 2px solid var(--colour-primary);
   overflow: auto;
   scrollbar-width: thin;
   scrollbar-color: var(--colour-primary) var(--colour-bg);
-  box-shadow: 0.1em -0.2em 0em 0.1em var(--colour-shadow), 0.1em -0.1em 0em 0.1em var(--colour-shadow);
+  box-shadow: 0.1em -0.2em 0em 0.1em var(--colour-shadow), 0.1em 0em 0em 0.1em var(--colour-shadow);
+}
+
+::-webkit-scrollbar-corner {
+  background-color: var(--colour-bg);
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: var(--colour-primary);
+  -webkit-border-radius: 0.5em;
+}
+
+::-webkit-scrollbar {
+  background-color: var(--colour-bg);
+  width: 0.7em;
+  height: 0.7em;
 }
 
 .query-result-title {
@@ -183,8 +199,9 @@ body {
   background-color: var(--colour-primary);
   text-align: center;
   line-height: 1.2em;
-  margin-top: 0em;
+  margin-top: 0;
   position: fixed;
+  border-radius: 0px 0px 6px 6px;
 }
 
 .content-table {
