@@ -18,7 +18,7 @@ export default async function handler(
 
       let data = "";
       if(err instanceof Error) {
-        data = err.message;
+        data = "Error: " + err.message;
       
       } else {
           throw new Error("No property 'message' on Error object");
