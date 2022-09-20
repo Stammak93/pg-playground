@@ -52,9 +52,8 @@ export const sendQuery = async (query: string): Promise<string[] | QueryObject> 
     }
 };
 
-// some values don't show because they are not in a valid
-// format such as null and boolean therefore, I need to do change 
-// them to strings
+// some values such as null and boolean don't show because they are not in a valid
+// format. Therefore, I need to change them to strings or numbers
 export const processValue = (value: unknown): string | number => {
 
     let processedValue: string | number = "";
@@ -71,5 +70,30 @@ export const processValue = (value: unknown): string | number => {
         value === true ? processedValue = "true" : processedValue = "false";
     }
 
+    // attempt to parse the interval type of a postgre query
+    if(typeof value === "object") {
+
+        if(value !== null) {
+            let tmH = "00";
+            let tmM = "00";
+            let tmS = "00";
+            let days = "";
+
+            for (const [key,val] of Object.entries(value)) {
+                
+                if(key === "days") {
+                    days = Math.abs(val) > 1 ? `${val} days ` : `${val} day`;
+                
+                } else if (key === "seconds") {
+                    tmS = val > 9 ? `${val}` : `0${val}`;
+                
+                } else {
+                    key === "hours" ? tmH = val > 9 ? `${val}` : `0${val}` : tmM = val > 9 ? `${val}` : `0${val}`;
+                }
+            }
+            let intervalStr = `${days} ${tmH}:${tmM}:${tmS}`;
+            processedValue = intervalStr;
+        }
+    }
     return processedValue;
 };
