@@ -48,8 +48,12 @@ const generateFakeUserData = () => {
         let first_name = faker.name.firstName();
         let last_name = faker.name.lastName();
 
+        if(first_name.match(/\w+\'\w+/)) {
+            first_name = first_name.split("'").join("''");
+        }
+
         if(last_name.match(/\w+\'\w+/)) {
-            last_name = last_name.split("'").join(",");
+            last_name = last_name.split("'").join("''");
         }
 
         userBaseQuery += `('${first_name}','${last_name}')`

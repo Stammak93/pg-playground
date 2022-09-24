@@ -8,7 +8,6 @@
   --colour-bool: #fffc64;
 }
 
-
 html,
 body {
   padding: 0;
@@ -48,6 +47,7 @@ body {
 
 /* Toolbar Component */
 .toolbar-container {
+  display: flex;
   width: 100%;
   height: 4em;
   background-color: var(--colour-bg);
@@ -56,8 +56,9 @@ body {
   box-shadow: 0.15em 0.1em 0em 0.1em var(--colour-shadow);
 }
 
-.tl-btn {
-  width: 9em;
+.tl-btn,
+.fake {
+  width: 5em;
   height: 3.5em;
   color: var(--colour-primary);
   background-color: var(--colour-secondary);
@@ -68,13 +69,22 @@ body {
   box-shadow: 0.1em 0.2em 0em 0.1em var(--colour-shadow);
 }
 
+#fake-select {
+  width: 9em; 
+}
+
+#fake-select:focus {
+  color: var(--colour-primary);
+  background-color: var(--colour-secondary);
+  cursor: pointer;
+}
+
 .tl-btn:hover {
   color: var(--colour-secondary);
   background-color: var(--colour-primary);
   cursor: pointer;
   transform: scale(1.02);
 }
-
 
 /* Editor component */
 .query-input-container {
@@ -152,8 +162,6 @@ body {
   background-color: var(--colour-primary);
   cursor: pointer;
 }
-
-
 
 /* Result Component */
 .query-result-container {

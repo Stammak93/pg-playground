@@ -22,3 +22,20 @@ LOOP
 END LOOP;
 END
 $do$;`
+
+export const CLEAR_ALL_TABLES = `-- WARNING: this will clear all user created tables, not just fake tables!!!
+DO 
+$do$
+DECLARE
+  _tb text;
+BEGIN 
+  FOR _tb IN
+    SELECT table_name
+    FROM information_schema.columns
+    WHERE table_schema = 'public'
+    GROUP BY table_name
+LOOP
+    EXECUTE 'DROP TABLE ' || _tb;
+END LOOP;
+END
+$do$;`
