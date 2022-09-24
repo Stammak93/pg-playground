@@ -2,6 +2,7 @@ import type { Dispatch, SetStateAction } from "react";
 import { sendQuery } from "../utility/querying";
 import type { QueryObject, MetaData } from "../variousTypes";
 import { LIST_TABLES_QUERY_FULL } from "../utility/list-tables-query";
+import FakeDataSelect from "./FakeDataSelect";
 
 
 interface ToolbarProps {
@@ -45,6 +46,10 @@ const Toolbar = ({ query, setQueryHistory, queryHistory, setQueryResult, setQuer
         
     };
 
+    const handleFakeStoreClick = () => {
+
+    }
+
 
     return (
         <div className="toolbar-container">
@@ -62,6 +67,7 @@ const Toolbar = ({ query, setQueryHistory, queryHistory, setQueryResult, setQuer
                 onClick={() => handleListTablesBtnClick()}>
                     List Tables
             </button>
+            <FakeDataSelect setQuery={setQuery}/>
         </div>
     );
 };

@@ -1,6 +1,6 @@
 import { ResponseData, MetaData, QueryObject } from "../variousTypes";
 
-
+// processes the return data when it's a list
 const processMetadata = (metadata: MetaData[]) => {
     let returnValue: (MetaData | string)[] = [];
     let pushOnlyOneMsg = false;
@@ -19,6 +19,7 @@ const processMetadata = (metadata: MetaData[]) => {
     return returnValue
 };
 
+// performs the request and checks the data
 export const sendQuery = async (query: string): Promise<string[] | QueryObject> => {
     
     const response = await fetch("/api/pg", {
@@ -82,7 +83,7 @@ export const processValue = (value: unknown): string | number => {
             for (const [key,val] of Object.entries(value)) {
                 
                 if(key === "days") {
-                    days = Math.abs(val) > 1 ? `${val} days ` : `${val} day`;
+                    days = Math.abs(val) !== 1 ? `${val} days ` : `${val} day`;
                 
                 } else if (key === "seconds") {
                     tmS = val > 9 ? `${val}` : `0${val}`;
