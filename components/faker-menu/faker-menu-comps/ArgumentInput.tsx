@@ -1,19 +1,15 @@
-import { useState } from "react";
 import { fakerArgumentConvertList } from "../../../utility/faker/faker-argument-convert-list";
 import { useFakerQueryStore } from "../../../utility/zustand/faker-query-store";
 
 interface ArgumentInputProps {
     subOption: string;
-    tableName: string;
-    fieldName: string;
-}
+};
 
 
-const ArgumentInput = ({ subOption, tableName, fieldName }: ArgumentInputProps) => {
+const ArgumentInput = ({ subOption }: ArgumentInputProps) => {
 
-    // this needs to become a store object for acess in LoadQuery component!!!!
+    
     const addToArgObj = useFakerQueryStore((state) => state.addToArgObj);
-
 
     const handleInputInput = (index: number, value: string, type: string) => {
 

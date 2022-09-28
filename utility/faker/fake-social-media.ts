@@ -1,6 +1,12 @@
 import { faker } from "@faker-js/faker";
 import { REMOVE_FAKE_TABLES } from "../list-tables-query";
 
+
+// this is here for me to have an idea of how to structure some
+// of the queries with template strings
+// and what to check for
+
+
 const createUsersTable = () => {
 
     return (

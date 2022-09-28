@@ -8,15 +8,13 @@ export type FakerQuery = {
     targetFunc: string;
 }
 
-// call Object.values with this during loop
-// that creates query strings with faker function results
 interface MapArgsToTableFieldNames {
-    [key: string]: (string | number)[];
+    [key: string]: ArgObj;
 };
 
 interface AddToFakerSelectionValues {
     tableFieldNameCombo: string;
-    args: (string | number)[];
+    args: ArgObj;
 };
 
 interface ArgObj {
@@ -34,10 +32,12 @@ interface FakerQueryState {
     fakerFunctionSelectionObj: MapArgsToTableFieldNames;
     addFakerQuery: (by: FakerQuery) => void;
     removeFakerQuery: (by: number) => void;
+    removeAllFakerQueries: () => void;
     addToArgObj: (by: AddToArgValues) => void;
     resetArgObj: () => void;
     addToFakerSelection: (by: AddToFakerSelectionValues) => void;
     removeFakerSelection: (by: string) => void;
+    removeAllFakerSelections: () => void;
 };
 
 export const useFakerQueryStore = create<FakerQueryState>()(
@@ -49,7 +49,7 @@ export const useFakerQueryStore = create<FakerQueryState>()(
                 fakerFunctionSelectionObj: {},
                 addFakerQuery: (by) => set((state) => ({ fakerQueries: [...state.fakerQueries, by] })),
                 removeFakerQuery: (by) => set((state) => ({ fakerQueries: state.fakerQueries.filter(value => state.fakerQueries[by] !== value)})),
-                
+                removeAllFakerQueries: () => set({ fakerQueries: []}),
                 addToArgObj: (by) => set((state) => ({ fakerArgObj: {...state.fakerArgObj, [by.index]: by.value }})),
                 resetArgObj: () => set({ fakerArgObj: {} }),
                 
@@ -60,6 +60,8 @@ export const useFakerQueryStore = create<FakerQueryState>()(
                 removeFakerSelection: (by) => set((state) => ({ fakerFunctionSelectionObj: (
                     delete state.fakerFunctionSelectionObj[by], state.fakerFunctionSelectionObj)
                 })),
+                
+                removeAllFakerSelections: () => set({ fakerFunctionSelectionObj: {}}),
             }),
             { 
                 name: "faker-query-storage",

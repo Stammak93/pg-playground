@@ -156,12 +156,14 @@ body {
 }
 
 /* RerunButton component */
-.rerun-button-container {
+.rerun-button-container,
+.f-button-container {
   align-self: center;
   height: 2.7em;
 }
 
-.rerun-button {
+.rerun-button,
+.f-button {
   height: 100%;
   width: 5em;
   min-width: 3em;
@@ -172,7 +174,8 @@ body {
   box-shadow: -0.2em 0.1em 0em 0.1em var(--colour-shadow);
 }
 
-.rerun-button:hover {
+.rerun-button:hover,
+.f-button:hover {
   color: var(--colour-secondary);
   background-color: var(--colour-primary);
   cursor: pointer;

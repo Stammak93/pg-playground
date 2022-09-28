@@ -52,7 +52,7 @@ const MainMenu = ({ setOpen }: MainMenuProps) => {
                     }
                 </div>
             }
-            {userAction === "create" && <h3 style={{ color: "white"}}>Not implemented yet</h3>}
+            {userAction === "create" && <h3 style={{ color: "white", textAlign: "center"}}>Not implemented yet</h3>}
             {userAction === "load" && <LoadQuery />}
         </div>
     )

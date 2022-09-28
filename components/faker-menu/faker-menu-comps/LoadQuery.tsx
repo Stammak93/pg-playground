@@ -3,10 +3,8 @@ import { faker } from "@faker-js/faker";
 import type { FakerQuery } from "../../../utility/zustand/faker-query-store";
 import { useFakerQueryStore } from "../../../utility/zustand/faker-query-store";
 import { useSqlQueryStore } from "../../../utility/zustand/sql-query-store";
+import FakerQueryTable from "./FakerQueryTable";
 
-interface DuplicateInsert {
-    [key: string]: number;
-}
 
 interface InsertQueryObj {
     [key: string]: string; // key is index of each table name, value is table name
@@ -27,30 +25,11 @@ const LoadQuery = () => {
     const [iterations, setIterations] = useState(1);
 
     const fakerQueries = useFakerQueryStore((state) => state.fakerQueries);
-    const removeFakerQuery = useFakerQueryStore((state) => state.removeFakerQuery);
     const updateQuery = useSqlQueryStore((state) => state.updateQuery);
-    const removeFakerSelection = useFakerQueryStore((state) => state.removeFakerSelection);
     const fakerSelectionObj = useFakerQueryStore((state) => state.fakerFunctionSelectionObj);
+    const removeAllSelections = useFakerQueryStore((state) => state.removeAllFakerSelections);
+    const removeAllQueries = useFakerQueryStore((state) => state.removeAllFakerQueries);
 
-    
-    const checkQueryListForDuplicates = (): boolean => {
-
-        let duplicateInsertObj: DuplicateInsert = {};
-        let duplicate = false;
-        // check query list for attempts to insert multiple types of data to same field
-        fakerQueries.forEach((query) => {
-            // create key from table and field names of query list, set value to 1, then increment by 1
-            duplicateInsertObj[query.tableName+query.fieldName] === 1 ?
-                duplicateInsertObj[query.tableName+query.fieldName] += 1 
-                : duplicateInsertObj[query.tableName+query.fieldName] = 1;
-                
-                if(duplicateInsertObj[query.tableName+query.fieldName] === 2) {
-                    duplicate = true
-            }
-        });
-
-        return duplicate;
-    };
 
     // add each unique table to an array
     const grabTableNames = (fakerQueries: FakerQuery[]): string[] => {
@@ -59,13 +38,13 @@ const LoadQuery = () => {
     };
 
     // creates an object where each table name is a key and the value is an array of its fields
-    // only the fields added to the list by the user
+    // that were provided by the user
     const createFieldListObj = (fakerQueries: FakerQuery[]): FieldListObj => {
 
         let fieldListObj: FieldListObj = {};
 
         fakerQueries.forEach((item) => {
-            // if undefined setup new array at index and push field name to it, otherwise push to array
+            // if undefined setup new array at index and push to it, otherwise push to existing array
             if(typeof fieldListObj[item.tableName] === "undefined") {
                 fieldListObj[item.tableName] = []
             } 
@@ -114,17 +93,12 @@ const LoadQuery = () => {
             return;
         }
 
-        if(checkQueryListForDuplicates()) {
-            alert("Multiple inserts to same table and field detected. Please remove individual rows by clicking on them.");
-            return;
-        }
-
-        let tableNames = grabTableNames(fakerQueries);
-        let fieldlistObj = createFieldListObj(fakerQueries); 
-        let baseInsertStringObj = baseInsertStringCreator(tableNames,fieldlistObj);
+        let tableNames = grabTableNames(fakerQueries); // list of unique table names
+        let fieldlistObj = createFieldListObj(fakerQueries); // an object with table names as keys and values of FieldListObjValues
+        let baseInsertStringObj = baseInsertStringCreator(tableNames,fieldlistObj); // object with querystrings as values and table names as keys
         let fullQueryString = ``
 
-        // loop through table names
+
         tableNames.forEach((tbName) => {
             fullQueryString += baseInsertStringObj[tbName] + `\n`
 
@@ -132,12 +106,27 @@ const LoadQuery = () => {
                 let resultArray: string[] = [];
                 
                 fieldlistObj[tbName].forEach((entry) => {
-                    
-                    let argList = fakerSelectionObj[tbName+entry.fieldName]; // argument list for function
+
+                    let tempArgList = fakerSelectionObj[tbName+entry.fieldName];
+                    // utilise the fact that I can use undefined to 
+                    // force default values to be used for functions where 
+                    // a user has not provided an argument
+                    // this way it's possible for a user to only input the third argument in a function for example
+                    let argList: (string | number | undefined)[] = []
+                    for(let i = 0; i < 4; i++) {
+                        if(typeof tempArgList[i] === "undefined") {
+                            argList.push(undefined)
+                        } else {
+                            argList.push(tempArgList[i])
+                        }
+                    }
+
                     let origin = entry.origin.toLowerCase(); // initial user choice in menu eg Address or Commerce
                     let fakerFunc = entry.fakerFunc; // the selected faker function to execute
-                    let result = faker[origin][fakerFunc](...argList);
+                    let result = faker[origin][fakerFunc](...argList); // this is going to display an error but it does work
                     
+                    // strings with apostrophes need extra apostrophes
+                    // to be considered strings
                     if(typeof result === "string") {
                         if(result.match(/\w+\'\w+/)) {
                             result = result.split("'").join("''");
@@ -176,39 +165,15 @@ const LoadQuery = () => {
         }
     };
 
+    const handleClearAllClick = () => {
+        removeAllSelections();
+        removeAllQueries();
+    }
 
-    const handleQueryRemoval = (index: number, tableName: string, fieldName: string) => {
-        removeFakerQuery(index)
-        removeFakerSelection(tableName+fieldName)
-    };
-
-
-    const renderFakerQueries = fakerQueries.map((item, index) => {
-
-        return (
-            <tr key={index} onClick={() => handleQueryRemoval(index, item.tableName, item.fieldName)}>
-                <td>{item.tableName}</td>
-                <td>{item.fieldName}</td>
-                <td>{item.targetFunc}</td>
-            </tr>
-        )
-    });
 
     return (
-        <div className="load-query">
-            <table className="content-table">
-                <thead>
-                    <tr>
-                        <th>Table Name</th>
-                        <th>Table Field</th>
-                        <th>Faker Function</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {fakerQueries.length > 0 ? renderFakerQueries : null}
-                </tbody>
-            </table>
-            <button className="load-query-btn" onClick={() => handleLoadQuery()}>Load Query</button>
+        <>
+            <FakerQueryTable />
             <input 
                 className="load-query__iterations" 
                 type="number" 
@@ -216,7 +181,11 @@ const LoadQuery = () => {
                 onChange={(e) => handleIterationsInput(e.target.value)}
                 placeholder="iterations">
             </input>
-        </div>
+            <div className="load-query__btns">
+                <button className="load-query__btn" onClick={() => handleLoadQuery()}>Load Query</button>
+                <button className="load-query__btn" onClick={() => handleClearAllClick()}>Clear All</button>
+            </div>
+        </>
     );
 };
 

@@ -21,9 +21,11 @@ const History = ({ setQueryResult }: HistoryProps) => {
         return (
             <div key={index} className="query-history__item">
                 <RerunButton historyTextValue={item.query} setQueryResult={setQueryResult}/>
-                <button 
-                    className="rerun-button"
-                    onClick={() => removeQueryFromHistory(index)}>F</button>
+                <div className="f-button-container">
+                    <button 
+                        className="f-button"
+                        onClick={() => removeQueryFromHistory(index)}>F</button>
+                </div>
                 <CodeMirror
                     className="query-history__content"
                     value={item.query}
