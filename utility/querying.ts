@@ -71,7 +71,7 @@ export const processValue = (value: unknown): string | number => {
         value === true ? processedValue = "true" : processedValue = "false";
     }
 
-    // attempt to parse the interval type of a postgre query
+    // parse the interval type of a postgres query
     if(typeof value === "object") {
 
         if(value !== null) {
@@ -89,11 +89,16 @@ export const processValue = (value: unknown): string | number => {
                     tmS = val > 9 ? `${val}` : `0${val}`;
                 
                 } else {
+                    // I have surprised myself
+                    // I have ternaried up to a 100 with this one
+                    // it evaluates whether key === string hours, 
+                    // then sets hours to value if above 9, so 10:00, 15:00, otherwise 09:00, 05:00 etc.
+                    // other otherwise it does this with minutes
                     key === "hours" ? tmH = val > 9 ? `${val}` : `0${val}` : tmM = val > 9 ? `${val}` : `0${val}`;
                 }
             }
-            let intervalStr = `${days} ${tmH}:${tmM}:${tmS}`;
-            processedValue = intervalStr;
+            
+            processedValue = `${days} ${tmH}:${tmM}:${tmS}`;
         }
     }
     return processedValue;

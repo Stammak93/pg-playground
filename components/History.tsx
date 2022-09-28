@@ -3,27 +3,30 @@ import CodeMirror from "@uiw/react-codemirror";
 import RerunButton from "./RerunButton";
 import { sql, PostgreSQL } from "@codemirror/lang-sql";
 import type { MetaData } from "../variousTypes";
+import { useSqlQueryStore } from "../utility/zustand/sql-query-store";
 
 interface HistoryProps {
-    queryHistory: string[];
     setQueryResult: Dispatch<SetStateAction<(MetaData | string)[]>>;
 };
 
 
 // this component will display a list of previously executed queries
-// in memory
+// with zustand the query history will persist
+const History = ({ setQueryResult }: HistoryProps) => {
 
-const History = ({ queryHistory, setQueryResult }: HistoryProps) => {
+    const sqlQueryHistory = useSqlQueryStore((state) => state.sqlQueryHistory);
+    const removeQueryFromHistory = useSqlQueryStore((state) => state.removeQueryFromHistory);
 
-
-    const renderQueryHistory = queryHistory.map((entry,index) => {
-
+    const renderQueryHistory = sqlQueryHistory.map((item,index) => {
         return (
             <div key={index} className="query-history__item">
-                <RerunButton historyTextValue={entry} setQueryResult={setQueryResult}/>
+                <RerunButton historyTextValue={item.query} setQueryResult={setQueryResult}/>
+                <button 
+                    className="rerun-button"
+                    onClick={() => removeQueryFromHistory(index)}>F</button>
                 <CodeMirror
                     className="query-history__content"
-                    value={entry}
+                    value={item.query}
                     width="100%"
                     height="auto"
                     minHeight="2em"
@@ -34,13 +37,13 @@ const History = ({ queryHistory, setQueryResult }: HistoryProps) => {
                     readOnly={true}
                 />
             </div>
-        );
+        )
     });
 
 
     return (
         <div className="query-history-container">
-            <h3 style={{ color: "white", height: "0.5em"}}>Query History</h3>
+            <h3 className="query-history__title">Query History</h3>
             {renderQueryHistory}
         </div>
     )

@@ -48,7 +48,6 @@ const FakeDataSelect = ({ setQuery }: FakeDataSelectProps) => {
             setOption("none")
         }
 
-        console.log("options")
         if(option !== "none") {
             handleChange();
         }

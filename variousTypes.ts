@@ -1,4 +1,4 @@
-// not needed but it's there
+// not needed but it's there to define the fields type in MetaData
 type Field = {
     name: string,
     tableID: number,

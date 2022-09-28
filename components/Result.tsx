@@ -90,7 +90,6 @@ const Result = ({ queryResult }: QueryResult) => {
     
     const renderedContent = queryResult.map((content,index) => {
         
-
         return (
             renderResultContent(content,index)
         )
@@ -99,7 +98,7 @@ const Result = ({ queryResult }: QueryResult) => {
 
     return (
         <div className="query-result-container">
-            <div className="query-result-title">
+            <div className="query-result__title">
                 <h3>Query Result</h3>
             </div>
             { queryResult.length > 0 ?

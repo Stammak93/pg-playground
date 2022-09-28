@@ -7,6 +7,7 @@ const Home: NextPage = () => {
     <>
       <CustomHead />
       <MainContent />
+      <div id="modal" className='disabled'></div>
     </>
   );
 };

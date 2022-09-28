@@ -2,21 +2,24 @@ import type { Dispatch, SetStateAction } from "react";
 import { sendQuery } from "../utility/querying";
 import type { QueryObject, MetaData } from "../variousTypes";
 import { LIST_TABLES_QUERY_FULL } from "../utility/list-tables-query";
-import FakeDataSelect from "./FakeDataSelect";
+import { useSqlQueryStore } from "../utility/zustand/sql-query-store";
+import MenuModal from "./faker-menu/MenuModal";
 
 
 interface ToolbarProps {
-    setQueryHistory: Dispatch<SetStateAction<string[]>>;
-    queryHistory: string[];
-    query: string;
     setQueryResult: Dispatch<SetStateAction<(MetaData | string)[]>>;
-    setQuery: Dispatch<SetStateAction<string>>;
 };
 
-// this component will execute queris and set state based on server response
-const Toolbar = ({ query, setQueryHistory, queryHistory, setQueryResult, setQuery }: ToolbarProps) => {
+// this component will execute queries and set state based on server response
+const Toolbar = ({ setQueryResult }: ToolbarProps) => {
 
+    // check utility/zustand/sql-query-store for details.
+    const sqlQuery = useSqlQueryStore(state => state.sqlQuery);
+    const removeQuery = useSqlQueryStore(state => state.removeQuery);
+    const updateQueryHistory = useSqlQueryStore(state => state.updateQueryHistory);
+    const removeAllQueries = useSqlQueryStore(state => state.removeAllQueries);
 
+    
     const handleListTablesBtnClick = async (): Promise<void> => {
 
         const result: string[] | QueryObject = await sendQuery(LIST_TABLES_QUERY_FULL);
@@ -31,25 +34,20 @@ const Toolbar = ({ query, setQueryHistory, queryHistory, setQueryResult, setQuer
 
     const handleQueryBtnClick = async (): Promise<void> => {
         
-        if(query === "") {
+        if(sqlQuery === "") {
             return;
         }
         
-        const result: string[] | QueryObject  = await sendQuery(query);
+        const result: string[] | QueryObject  = await sendQuery(sqlQuery);
 
         if(Array.isArray(result)) {
             setQueryResult(result)
         } else {
-            setQueryHistory(queryHistory => [...queryHistory, query]);
+            updateQueryHistory({query: sqlQuery});
             setQueryResult(result.queryDeets);
         }
         
     };
-
-    const handleFakeStoreClick = () => {
-
-    }
-
 
     return (
         <div className="toolbar-container">
@@ -60,14 +58,20 @@ const Toolbar = ({ query, setQueryHistory, queryHistory, setQueryResult, setQuer
             </button>
             <button 
                 className="toolbar-container__button-clear tl-btn"
-                onClick={() => setQuery("") }>Clear Console
+                onClick={() => removeQuery() }>
+                    Clear Console
             </button>
             <button 
                 className="toolbar-container__button-tables tl-btn" 
                 onClick={() => handleListTablesBtnClick()}>
                     List Tables
             </button>
-            <FakeDataSelect setQuery={setQuery}/>
+            <button 
+                className="toolbar-container__button-history tl-btn"
+                onClick={() => removeAllQueries()}>
+                    Delete History
+            </button>
+            <MenuModal />
         </div>
     );
 };
