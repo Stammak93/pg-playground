@@ -71,7 +71,6 @@ const Result = ({ queryResult }: QueryResult) => {
         } else {
 
             if(typeof content === "string") {
-
                 return (
                     <p className="query-info" key={`${index}_${content}`}>{content}</p>
                 );

@@ -49,7 +49,7 @@ export const fakerArgumentConvertList: {[key: string]: ArgumentConverter} = {
             placeholder: "max"
         },{
             type: "number",
-            placeholder: "number"
+            placeholder: "dec"
         },{
             type: "string",
             placeholder: "symbol"

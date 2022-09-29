@@ -46,6 +46,32 @@ li {
     border-bottom: 3px solid var(--colour-secondary);
 }
 
+.create-table-container {
+    display: flex;
+    flex-direction: column-reverse;
+    justify-content: space-between;
+    width: 100%;
+    min-height: 10em;
+}
+
+.td-th-overflow {
+    overflow-wrap: break-word;
+    max-width: 4em;
+}
+
+.create-table__submit {
+    width: 100%;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-size: 1rem;
+    background-color: var(--colour-secondary);
+    color: var(--colour-primary);
+    border: 3px solid var(--colour-primary);
+    border-radius: 0em 0em 2em 2em;
+}
+
+
+
+
 .faker-menu {
     font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
     display: flex;
@@ -142,8 +168,6 @@ li {
     border: 3px solid var(--colour-primary);
     border-radius: 0.4rem;
 }
-
-
 
 .faker-categories,
 .faker-subcategories {

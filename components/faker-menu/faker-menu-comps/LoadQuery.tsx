@@ -123,15 +123,25 @@ const LoadQuery = () => {
 
                     let origin = entry.origin.toLowerCase(); // initial user choice in menu eg Address or Commerce
                     let fakerFunc = entry.fakerFunc; // the selected faker function to execute
-                    let result = faker[origin][fakerFunc](...argList); // this is going to display an error but it does work
+
+                    // I can index properties in a class with a string, but Typescript doesn't understand that
+                    // because Faker doesn't have [key:string]: something. 
+                    // So there is an error displaying here
+                    let result: unknown = faker[origin][fakerFunc](...argList);
                     
                     // strings with apostrophes need extra apostrophes
                     // to be considered strings
-                    if(typeof result === "string") {
-                        if(result.match(/\w+\'\w+/)) {
+                    if(typeof result === "string" || Object.prototype.toString.call(result) === "[object Date]") {
+                        // this literally tells Typescript it's a string or a Date
+                        // otherwise the check fails. I should be able to call .toString()
+                        if(result.toString().match(/\w+\'\w+/)) {
                             result = result.split("'").join("''");
                         }
                         resultArray.push(`'${result}'`)
+                    
+                    } else if(Array.isArray(result)) {
+                        resultArray.push(`[${result}]`)
+                    
                     } else {
                         resultArray.push(`${result}`)
                     }

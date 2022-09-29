@@ -117,7 +117,6 @@ export const subCategories: {[key: string]: string[]} = {
         'datetime',
         'float',
         'hexadecimal',
-        'json',
         'number',
         'uuid'  
     ],
