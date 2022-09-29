@@ -23,7 +23,7 @@ END LOOP;
 END
 $do$;`
 
-export const CLEAR_ALL_TABLES = `-- WARNING: this will clear all user created tables, not just fake tables!!!
+export const CLEAR_ALL_TABLES = `-- WARNING: this will clear all user created tables!!!
 DO 
 $do$
 DECLARE

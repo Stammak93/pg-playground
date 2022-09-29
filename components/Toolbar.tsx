@@ -1,7 +1,7 @@
 import type { Dispatch, SetStateAction } from "react";
 import { sendQuery } from "../utility/querying";
 import type { QueryObject, MetaData } from "../variousTypes";
-import { LIST_TABLES_QUERY_FULL } from "../utility/list-tables-query";
+import { LIST_TABLES_QUERY_FULL, CLEAR_ALL_TABLES } from "../utility/list-tables-query";
 import { useSqlQueryStore } from "../utility/zustand/sql-query-store";
 import MenuModal from "./faker-menu/MenuModal";
 
@@ -15,6 +15,7 @@ const Toolbar = ({ setQueryResult }: ToolbarProps) => {
 
     // check utility/zustand/sql-query-store for details.
     const sqlQuery = useSqlQueryStore(state => state.sqlQuery);
+    const updateQuery = useSqlQueryStore(state => state.updateQuery);
     const removeQuery = useSqlQueryStore(state => state.removeQuery);
     const updateQueryHistory = useSqlQueryStore(state => state.updateQueryHistory);
     const removeAllQueries = useSqlQueryStore(state => state.removeAllQueries);
@@ -70,6 +71,11 @@ const Toolbar = ({ setQueryResult }: ToolbarProps) => {
                 className="toolbar-container__button-history tl-btn"
                 onClick={() => removeAllQueries()}>
                     Delete History
+            </button>
+            <button 
+                className="toolbar-container__button-delete tl-btn"
+                onClick={() => updateQuery(CLEAR_ALL_TABLES)}>
+                    Clear Tables
             </button>
             <MenuModal />
         </div>
