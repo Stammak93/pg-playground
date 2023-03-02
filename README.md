@@ -6,7 +6,7 @@ Env key:
 ```
 DB_URI
 ```
-Uri value template:
+URI value template:
 ```
 postgres://user:pass@example.com:5432/dbname
 ```
